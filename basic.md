@@ -446,6 +446,35 @@ print(f"Output file: {args.output}")
 - `choices`: A parameter that restricts the possible values for the argument to a predefined set, ensuring that only valid options are accepted.
 - `required`: A parameter that specifies whether the argument is mandatory or optional. If set to `True`, the script will raise an error if the argument is not provided.
 
+### Muti-threading
+Multi-threading is a programming technique that allows multiple threads (smaller units of a process) to run concurrently within a single program. This can improve performance and responsiveness, especially in I/O-bound tasks, such as network requests or file operations. In Python, we can use the `ThreadPoolExecutor` class from the `concurrent.futures` module to manage threads easily.
+```python
+from concurrent.futures import ThreadPoolExecutor
+import time
+
+def task(n):
+    print(f"Task {n} started.")
+    time.sleep(2)  # Simulate a time-consuming task
+    print(f"Task {n} completed.")
+    return n * 2
+# Create a ThreadPoolExecutor with a specified number of threads
+with ThreadPoolExecutor(max_workers=4) as executor:
+    # Submit tasks to the executor
+    futures = [executor.submit(task, i) for i in range(5)]
+    # Wait for all tasks to complete and retrieve results
+    results = [future.result() for future in futures]
+    print("Results:", results)
+```
+
+- `ThreadPoolExecutor`: A class that manages a pool of threads, allowing us to submit tasks for concurrent execution.
+- `max_workers`: A parameter that specifies the maximum number of threads in the pool. This controls the level of concurrency.
+- `submit()`: A method that submits a task (function) to the executor for execution in a separate thread. It returns a `Future` object representing the result of the task.
+- `Future`: An object that represents the result of a task that may not have completed yet. We can use it to check the status of the task or retrieve its result.
+- `result()`: A method that blocks until the task is completed and returns the result. If the task raised an exception, it will be re-raised when calling `result()`.
+- `with` statement: A context manager that automatically handles the cleanup of the executor when the block is exited, ensuring that all threads are properly terminated.
+
+
+
 
 
 
