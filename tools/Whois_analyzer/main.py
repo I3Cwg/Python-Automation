@@ -1,7 +1,5 @@
-from Whois_analyzer.analyzer import WhoisAnalyzer
+import sys
+from Whois_analyzer.cli import main
 
 if __name__ == "__main__":
-    whois_analyzer = WhoisAnalyzer()
-    domain = "example.com"
-    result = whois_analyzer.query_domain(domain)
-    print(result)
+    sys.exit(main())
